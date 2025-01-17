@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="results-container">
+    <h2>Quiz Results: {{ quiz.name }}</h2>
+    <p>You got {{ correct_answers }} out of {{ quiz.questions.count }} correct!</p>
+    <a href="{% url 'dashboard' %}" class="btn">Go to Dashboard</a>
+</div>
+{% endblock %}

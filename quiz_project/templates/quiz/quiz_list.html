@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="quiz-list-container">
+    <h2>Available Quizzes</h2>
+    <ul class="quiz-list">
+      {% for quiz in quizzes %}
+        <li>
+          <a href="{% url 'take_quiz' quiz.id %}">{{ quiz.name }}</a>
+        </li>
+      {% empty %}
+        <li>No quizzes available.</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

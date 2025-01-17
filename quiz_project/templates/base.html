@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Quiz App{% endblock %}</title>
+
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+    <!-- Favicon for the website -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+    <!-- Google Fonts for improved typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header section with background image and modern design -->
+    <header>
+        <div class="header-container">
+            <h1>Lang Test</h1>
+            <nav>
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                        {% if request.resolver_match.url_name != "dashboard" %}
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Quiz App. All rights reserved.</p>
+    </footer>
+</body>
+</html>

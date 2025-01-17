@@ -1,0 +1,28 @@
+.dashboard-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.dashboard-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #f9f9f9;
+}
+
+.dashboard-actions .btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.dashboard-actions .btn-danger {
+    background: #dc3545;
+}
+
