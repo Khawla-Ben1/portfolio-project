@@ -8,6 +8,8 @@ from .forms import *
 
 
 def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -19,6 +21,8 @@ def register_view(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
@@ -71,10 +75,45 @@ def take_quiz(request, quiz_id):
 def results_view(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     correct_answers = int(request.GET.get("correct_answers", 0))
-    return render(request, "quiz/results.html", {"quiz": quiz, "correct_answers": correct_answers})
+    total_questions = quiz.questions.count()
+    incorrect_answers = total_questions - correct_answers
+
+    # Calculate the score percentage
+    score_percentage = (correct_answers / total_questions) * 100 if total_questions > 0 else 0
+
+    # Determine pass or fail
+    passed = score_percentage >= 60  # Passing threshold is 60%
+
+    # Pass data for the chart and pass/fail message
+    chart_data = {
+        'correct': correct_answers,
+        'incorrect': incorrect_answers,
+        'total': total_questions
+    }
+
+    return render(request, "quiz/results.html", {
+        "quiz": quiz,
+        "correct_answers": correct_answers,
+        "total_questions": total_questions,
+        "chart_data": chart_data,
+        "score_percentage": score_percentage,
+        "passed": passed
+    })
 
 
-
-def quiz_list(request):
+def Quizzes(request):
     quizzes = Quiz.objects.all()  # Fetch all quizzes from the database
     return render(request, 'quiz/quiz_list.html', {'quizzes': quizzes})
+
+
+def home_view(request):
+    if request.user.is_authenticated:
+        return render(request, "quiz/dashboard.html")  # Render dashboard for authenticated users
+    else:
+        return redirect('quiz/login')
+
+
+def handle_extra_path(request, extra):
+    return render(request, 'quiz/404.html', status=404)
+
+
