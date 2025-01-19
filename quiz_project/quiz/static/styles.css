@@ -297,6 +297,28 @@ footer {
     text-align: center;
 }
 
+/* Timer Container */
+.timer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Space below the timer */
+    background-color: #fff; /* White background for better visibility */
+    border: 2px solid #007bff; /* Bold blue border for clear distinction */
+    border-radius: 50%; /* Makes the timer circular */
+    width: 90px; /* Set a fixed width */
+    height: 100px; /* Set a fixed height */
+    color: #333; /* Default text color */
+}
+
+/* Highlight the Timer Value */
+.timer #timer {
+    color: black; /* Bright red for the timer value */
+    font-weight: bold;
+    font-size: 20px; /* Slightly larger than surrounding text */
+}
+
+
+
 
 
 

@@ -5,7 +5,12 @@
     <h2>{{ quiz.name }}</h2>
     <p class="quiz-description">{{ quiz.description }}</p>
 
-    <form method="POST" class="quiz-form">
+    <!-- Timer Display -->
+    <div class="timer">
+        <span id="timer">05:00</span>
+    </div>
+
+    <form method="POST" class="quiz-form" id="quiz-form">
         {% csrf_token %}
         
         {% for question in questions %}
@@ -17,7 +22,6 @@
                 <div class="options-container">
                     {% for option in question.options.all %}
                         <div class="option">
-                            <!-- Radio button input inside the option div -->
                             <input type="radio" name="question_{{ question.id }}" value="{{ option.id }}" id="option_{{ option.id }}" class="option-input">
                             <label for="option_{{ option.id }}" class="option-text">
                                 {{ option.text }}
@@ -36,33 +40,52 @@
     </form>
 </div>
 
-
 {% block extra_js %}
+<script>
+    // JavaScript for the timer
+    const timerElement = document.getElementById("timer");
+    const form = document.getElementById("quiz-form");
+
+    // Set the total time limit in seconds (e.g., 5 minutes = 300 seconds)
+    let timeLeft = 300;
+
+    function updateTimer() {
+        // Calculate minutes and seconds
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+
+        // Format the timer as MM:SS
+        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        // Check if time has run out
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            form.submit(); // Auto-submit the form when time is up
+        }
+
+        timeLeft--; // Decrement time
+    }
+
+    // Start the timer and update every second
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer(); // Initialize the timer immediately
+</script>
+
 <script>
     // JavaScript to apply styles when a radio button is checked
     document.querySelectorAll('.option').forEach(option => {
-    option.addEventListener('click', () => {
-        // Find the input inside the clicked option div
-        const radioInput = option.querySelector('.option-input');
-        
-        // Trigger the input's change event (i.e., "select" the radio button)
-        if (!radioInput.checked) {
-            radioInput.checked = true;
-        }
-
-        // Find the parent question container of the clicked option
-        const questionContainer = option.closest('.question-container');
-        
-        // Remove 'selected' class from all options in the current question container
-        questionContainer.querySelectorAll('.option').forEach(opt => {
-            opt.classList.remove('selected');
+        option.addEventListener('click', () => {
+            const radioInput = option.querySelector('.option-input');
+            if (!radioInput.checked) {
+                radioInput.checked = true;
+            }
+            const questionContainer = option.closest('.question-container');
+            questionContainer.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            option.classList.add('selected');
         });
-
-        // Add the 'selected' class to the clicked option
-        option.classList.add('selected');
     });
-});
 </script>
 {% endblock %}
 {% endblock %}
-
