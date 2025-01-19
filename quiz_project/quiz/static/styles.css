@@ -1,50 +1,100 @@
-/* General styles */
-body {
-    font-family: 'Roboto', sans-serif; /* Using a modern font for better readability */
-    background-color: #f4f4f4;  /* Light gray background */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: #333;  /* Dark text for readability */
 }
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+main {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+
+
 
 /* Header */
 header {
     background-color: #007bff; /* Blue background */
     color: white;
-    padding: 20px 20px;  /* Increased padding for a larger header area */
-    text-align: center;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* Space between h1 and nav */
+    align-items: center;  /* Vertically center the items */
     font-size: 36px;
     font-weight: bold;
-    /* background-image: url('/static/images/header-bg.jpg'); */
-    /* background-size: cover; */
-    /* background-position: center; */
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-header h1 {
+/* Flex container for the header content */
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Ensures h1 and nav are spaced out on one line */
+    align-items: center; /* Vertically aligns items in the middle */
+    width: 100%; /* Ensures the container takes full width */
+}
+
+/* The h1 (title) stays on the left and is smaller */
+.header-container h1 {
     margin: 0;
+    font-size: 24px; /* Adjust font size as needed */
 }
 
-/* Navigation links in header */
+/* Navigation links */
 header nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex; /* Makes the navigation items align in one row */
 }
 
 header nav ul li {
-    display: inline;
-    margin-right: 15px;
+    margin-left: 15px; /* Adds space between the nav items */
 }
 
 header nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    font-size: 18px;
 }
 
 header nav ul li a:hover {
     text-decoration: underline;
 }
+
+
+
+
+
+
+
+
+
 
 /* Footer */
 footer {
@@ -57,199 +107,336 @@ footer {
     width: 100%;
 }
 
+
+
+
+
+
+
 /* Dashboard container */
 .dashboard-container {
-    width: 85%;
-    margin: auto;
-    text-align: center;
-    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;  /* Ensures that image and content are spaced apart */
+    align-items: flex-start;  /* Aligns items to the top */
+    padding: 80px;
+    max-width: 1200px;  /* Adjust width based on your needs */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #bcc5be;
 }
 
-/* Dashboard section styles */
+/* Left section for the image */
+.dashboard-left {
+    flex: 1;  /* Takes up 1 part of the available space */
+    padding-right: 20px;  /* Space between the image and content */
+    display: flex;
+    justify-content: center;  /* Center the image horizontally */
+}
+
+/* Image styling */
+.dashboard-image {
+    width: 200%;  /*image width */
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Right section for content */
+.dashboard-right {
+    flex: 2;  /* Takes up 2 parts of the available space */
+    text-align: center;
+    padding-left: 20px;
+    display: flex;
+    justify-content: space-between; /* Adds space between child elements */
+    align-items: flex-start;
+    gap: 20px;
+}
+
 .dashboard-section {
-    margin-top: 20px;
+    flex: 1; /* Makes the section take up available space */
+    margin-top: 0; /* Removes extra margin for better alignment */
     padding: 20px;
     border-radius: 8px;
-    background: #fff url('/static/images/section-bg.jpg') no-repeat center center; /* Section background */
-    background-size: cover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
+    background-color: transparent; /* Semi-transparent background */
+    height: calc(70vh - 60px); /* Dynamic height */
+    overflow-y: scroll; /* Enables vertical scrolling */
+    width: 50%; /* Adjust width as needed */
+    max-width: 400px; /* Limit max width */
+    scrollbar-width: none;
 }
+
 
 .dashboard-section h3 {
     color: #333;
     font-size: 22px;
 }
 
-/* Buttons */
-.dashboard-actions .btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+.dashboard-section ul {
+    list-style-type: none; /* Removes the default bullet points */
+    padding: 0; /*Removes default padding from the list */
+    margin: 0; /*Removes default margin from the list*/
 }
 
-.dashboard-actions .btn:hover {
-    background: #0056b3;
+.dashboard-section li {
+    padding: 10px 0; /* Add spacing between items */
 }
 
-.dashboard-actions .btn-danger {
-    background: #dc3545;
-}
 
-.dashboard-actions .btn-danger:hover {
-    background: #b02a37;
-}
 
-/* Form Buttons */
-button {
-    background-color: #28a745;  /* Green for login/register buttons */
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
 
-button:hover {
-    background-color: #218838;
-}
 
-/* Quiz container */
+
+
+
+
+
+
+
+/* General Quiz Container (TAKE QUIZ) */
 .quiz-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;   /* Allows vertical scrolling */
+    max-height: 80vh;    /* Set a max height */
+    padding: 20px;       /* Optional: Adds space inside the container */
+    width: 100%;         /* Ensure full width */
+    scroll-behavior: smooth;  /* Smooth scroll behavior */
 }
 
-.quiz-container h1 {
-    text-align: center;
+
+.quiz-container h2 {
+    font-size: 28px;
     color: #333;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Quiz question styles */
-.question {
+.quiz-description {
+    font-size: 18px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Question Container */
+.question-container {
     margin-bottom: 25px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.question p {
+.question-text {
+    font-size: 20px;
+    color: #333;
+}
+
+/* Options Styling */
+.options-container {
+    margin-top: 15px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
+}
+
+.option-input {
+    display: none;
+}
+
+/* Label Styling */
+.option-text {
     font-size: 18px;
     color: #333;
-    margin-bottom: 15px;
+    padding-left: 10px;
 }
 
-.question label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #555;
+/* When the radio button is checked, style the whole option */
+.option.selected {
+    background-color: #FFC0CB;
+    color: white;
+    border-color: #FFC0CB;
 }
 
-.question input[type="radio"] {
-    margin-right: 10px;
+.option.selected .option-text {
+    color: white;
 }
 
-/* Submit button for quiz */
-.quiz-container button {
-    width: 100%;
-    padding: 15px;
+/* Submit Button */
+.submit-btn {
+    padding: 12px 20px;
     background-color: #007bff;
     color: white;
-    border: none;
     font-size: 18px;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+    margin: 20px auto;
 }
 
-.quiz-container button:hover {
-    background-color: #0056b3;
+.submit-btn:hover {
+    background-color: #FFC0CB;
 }
 
-/* Results page */
-.results-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* Form Footer */
+.form-footer {
     text-align: center;
 }
 
-.results-container h2 {
-    font-size: 30px;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Login/Register Container */
+.auth-container {
+    width: 100%;
+    max-width: 700px; /* Limit width */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px;
+    background-color: #fff; /* Background color */
+    border: 1px solid #ddd; /* Border around the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
+    flex: 1; /* Take up available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 800px; /* Increased height */
+}
+
+/* Login/Register Form */
+.auth-form {
+    margin: 0;
+    width: 80%; /* Ensure form fills the container */
+}
+
+/* Form Fields (p) */
+.auth-form p {
+    margin-bottom: 20px; /* Adjust spacing between the fields */
+    display: block; /* Stack form elements */
+    width: 100%; /* Ensure the input field fills the container */
+}
+
+/* Style the form inputs */
+.auth-form input, .auth-form select, .auth-form textarea {
+    width: 100%; /* Make the inputs take up available space */
+    padding: 12px 20px; /* Add padding for better spacing */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size for the input */
+}
+
+/* Form Labels */
+.auth-form label {
+    font-size: 16px; /* Label font size */
+    margin-bottom: 5px; /* Space between label and input */
+    display: block; /* Ensure label is above the input */
+}
+
+/* Heading */
+.auth-container h2 {
+    text-align: center;
+    font-size: 24px;
     color: #333;
+    margin-bottom: 20px;
 }
 
-.results-container p {
+/* Buttons */
+.auth-container .auth-form button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
     font-size: 18px;
-    color: #555;
-    margin: 20px 0;
-}
-
-.results-container a {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.results-container a:hover {
-    background-color: #0056b3;
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-    body {
-        padding: 0 10px;
-    }
-
-    .dashboard-container {
-        width: 95%;
-        padding: 10px;
-    }
-
-    .quiz-container {
-        padding: 20px;
-    }
-
-    button {
-        padding: 10px;
-    }
-}
-.quiz-container button {
-    display: inline-block;  /* Ensure the button is shown */
-    margin: 20px auto;
-    padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
     border: none;
-    font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    visibility: visible !important;  /* Force button to be visible */
-    position: relative;
-    z-index: 9999;  /* Ensure button appears in front */
+    max-width: 250px; /* Limit the width of the button */
+    margin: 20px auto; /* Center the button horizontally within the form */
+    margin-left: 120px;
 }
+
+.auth-container .auth-form button:hover {
+    background-color: #FFC0CB;
+}
+
+
+
+
+
+/* Already have an account link */
+.auth-container .login-link {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.auth-container .login-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.auth-container .login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons of login and register */
+.auth-container button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+    margin: 20px auto;
+}
+
+.auth-container button:hover {
+    background-color: #FFC0CB;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* quiz_list */
 .quiz-list-container {
-    max-width: 600px;
+    width: 800px;
     margin: 50px auto;
     text-align: center;
     background: #fff;
@@ -259,6 +446,8 @@ button:hover {
 }
 
 .quiz-list {
+    height: calc(70vh - 60px);
+    overflow-y: scroll;
     list-style: none;
     padding: 0;
 }
@@ -285,3 +474,178 @@ button:hover {
 .quiz-list li:hover a {
     color: white;
 }
+
+/* Hide the browser's default password validation messages */
+input:invalid + span {
+    display: none;
+}
+
+
+
+
+
+
+
+/* Results page */
+.results-container {
+    max-width: 800px;
+    width: 90%;
+    margin: auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.results-container h2 {
+    font-size: 30px;
+    color: #333;
+}
+
+.results-container p {
+    font-size: 18px;
+    color: #555;
+    margin: 20px 0;
+}
+
+.results-container a {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+}
+
+.results-container a:hover {
+    background-color: #0056b3;
+}
+
+/* chart */
+.chart-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+
+
+/* 404 error */
+.error-container {
+    text-align: center;
+    padding: 50px;
+    background-color: #f9f9f9;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.error-container h2 {
+    font-size: 1.5em;
+    color: #FFC0CB;
+}
+
+.error-container p {
+    font-size: 1.2em;
+    margin: 20px 0;
+}
+
+/* Image styling */
+.error-container img {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+}
+
+/* not found Button */
+.not_found-btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+    margin: 20px auto;
+    text-decoration: none;/*to not have an underline*/
+}
+
+.not_found-btn:hover {
+    background-color: #FFC0CB;
+}
+
+
+
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;  /* Stack image and content vertically */
+        text-align: center;  /*Center align for a better mobile view*/
+        padding: 20px;
+    }
+
+    .dashboard-left {
+        flex: none; /* Ensure it doesn't stretch */
+        width: 100%; /* Ensure it takes full width on mobile */
+        padding: 0;
+        margin-bottom: 20px; /* Add space between sections */
+        text-align: center; /* Center image */
+    }
+
+    .dashboard-image {
+        width: 80%;  /* Adjust image size on mobile */
+        height: auto;
+    }
+
+    .dashboard-right {
+        flex: none; /* Avoid it stretching more than needed */
+        width: 100%; /* Full width for content */
+        text-align: center; /* Center the content */
+        /* padding: 0; */
+    }
+
+    .quiz-container {
+        width: 100%; /* Ensure quiz container takes full width */
+        padding: 20px;
+    }
+
+    .question-container {
+        padding: 20px;
+    }
+
+    .submit-btn {
+        width: 100%;  /* Ensure button takes full width */
+        max-width: none; /* Remove any max-width to prevent limitation */
+    }
+
+    .not_found-btn {
+        width: auto;  /* Allow button width to adjust to its content */
+        max-width: 250px; /* Set max width to avoid stretching */
+        margin: 20px auto; /* Center the button */
+        text-decoration: none; /* Remove any underline */
+    }
+
+    .auth-container {
+        width: 100%;  /* Ensure full width */
+        max-width: 600px;  /* Limit width for better display */
+    }
+
+    .auth-form {
+        width: 100%;  /* Form takes full container width */
+    }
+}
+
