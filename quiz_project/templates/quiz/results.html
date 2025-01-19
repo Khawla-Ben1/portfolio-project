@@ -2,8 +2,57 @@
 
 {% block content %}
 <div class="results-container">
-    <h2>Quiz Results: {{ quiz.name }}</h2>
-    <p>You got {{ correct_answers }} out of {{ quiz.questions.count }} correct!</p>
+    <h2> {{ quiz.name }} Results:</h2>
+    
+    <!-- Display pass or fail message -->
+    {% if passed %}
+    <p class="pass-message">🎉 Congratulations! You passed the test! 🎉</p>
+    {% else %}
+    <p class="fail-message">😞 Unfortunately! You didn't pass the test! 😞</p>
+    {% endif %}
+    <!-- <p>Your Score: {{ score_percentage|floatformat:2 }}%</p> -->
+    <p>You got {{ correct_answers }} out of {{ total_questions }} correct!</p>
+
+    <div class="chart-container">
+        <canvas id="myDoughnutChart"></canvas>
+    </div>
+
     <a href="{% url 'dashboard' %}" class="btn">Go to Dashboard</a>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// JavaScript code to create the doughnut chart
+const ctx = document.getElementById('myDoughnutChart').getContext('2d');
+const myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Correct Answers', 'Incorrect Answers'],
+        datasets: [{
+            label: 'Quiz Results',
+            data: [{{ chart_data.correct }}, {{ chart_data.incorrect }}],  // Data from Django context
+            backgroundColor: ['#3498db', '#FFC0CB'],  // Blue for correct, pink for incorrect
+            borderColor: ['#3498db', '#FFC0CB'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw;
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+
 {% endblock %}

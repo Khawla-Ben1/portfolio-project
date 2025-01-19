@@ -1,31 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="dashboard-container">
-    <h2>Welcome, {{ user.first_name }}!</h2>
+<div class="abdellah">
+    <div class="dashboard-container">
+        <!-- Left section for the image -->
+        <div class="dashboard-left">
+            <img src="{% static 'images/Analysis-amico.png' %}" class="dashboard-image" alt="Analysis Illustration">
+        </div>
+        
+        <!-- Right section for the content -->
+        <div class="dashboard-right">
+            <h2>Quizzes Analytics :</h2>
 
-    <div class="dashboard-section">
-        <h3>Your Quiz History</h3>
-        {% if quiz_history %}
-            <ul>
-                {% for result in quiz_history %}
-                    <li>
-                        - Name: {{ result.quiz_name }} 
-                        - Score: {{ result.score }} 
-                        - Date: {{ result.date_taken|date:"d/m/Y h:i a" }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No quiz history available.</p>
-        {% endif %}
-    </div>
-
-    <div class="dashboard-actions">
-        {% for quiz in quizzes %}
-            <a href="{% url 'take_quiz' quiz.id %}" class="btn">Take {{ quiz.name }}</a>
-        {% endfor %}
-        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+            <div class="dashboard-section">
+                <!-- <h3>Your Quiz History</h3> -->
+                {% if quiz_history %}
+                    <ul>
+                        {% for result in quiz_history %}
+                            <li>
+                                {{ result.quiz.name }}
+                                ||  Score: {{ result.score }}
+                                ||  Date: {{ result.date_taken|date:"d/m/Y h:i a" }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No quiz history available.</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

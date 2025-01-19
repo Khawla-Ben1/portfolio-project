@@ -1,27 +1,68 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>{{ quiz.name }}</h2>
-  <p>{{ quiz.description }}</p>
+<div class="quiz-container">
+    <h2>{{ quiz.name }}</h2>
+    <p class="quiz-description">{{ quiz.description }}</p>
 
-  <form method="POST">
-    {% csrf_token %}
-    
-    {% for question in questions %}
-      <div class="question">
-        <p><strong>{{ question.text }}</strong></p>
+    <form method="POST" class="quiz-form">
+        {% csrf_token %}
         
-        {% for option in question.options.all %}
-          <label>
-            <input type="radio" name="question_{{ question.id }}" value="{{ option.id }}">
-            {{ option.text }}
-          </label><br>
+        {% for question in questions %}
+            <div class="question-container">
+                <div class="question">
+                    <p class="question-text"><strong>{{ question.text }}</strong></p>
+                </div>
+
+                <div class="options-container">
+                    {% for option in question.options.all %}
+                        <div class="option">
+                            <!-- Radio button input inside the option div -->
+                            <input type="radio" name="question_{{ question.id }}" value="{{ option.id }}" id="option_{{ option.id }}" class="option-input">
+                            <label for="option_{{ option.id }}" class="option-text">
+                                {{ option.text }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No questions found for this quiz.</p>
         {% endfor %}
-      </div>
-      {% empty %}
-        <p>No questions found for this quiz.</p>
-    {% endfor %}
-    
-    <button type="submit">Submit</button>
-  </form>
+
+        <div class="form-footer">
+            <button type="submit" class="submit-btn">Submit Quiz</button>
+        </div>
+    </form>
+</div>
+
+
+{% block extra_js %}
+<script>
+    // JavaScript to apply styles when a radio button is checked
+    document.querySelectorAll('.option').forEach(option => {
+    option.addEventListener('click', () => {
+        // Find the input inside the clicked option div
+        const radioInput = option.querySelector('.option-input');
+        
+        // Trigger the input's change event (i.e., "select" the radio button)
+        if (!radioInput.checked) {
+            radioInput.checked = true;
+        }
+
+        // Find the parent question container of the clicked option
+        const questionContainer = option.closest('.question-container');
+        
+        // Remove 'selected' class from all options in the current question container
+        questionContainer.querySelectorAll('.option').forEach(opt => {
+            opt.classList.remove('selected');
+        });
+
+        // Add the 'selected' class to the clicked option
+        option.classList.add('selected');
+    });
+});
+</script>
 {% endblock %}
+{% endblock %}
+

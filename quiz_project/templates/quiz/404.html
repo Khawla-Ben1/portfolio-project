@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Page Not Found - GER-T{% endblock %}
+
+{% block content %}
+    <div class="error-container">
+        <h2>Oops! The page you're looking for doesn't exist.</h2></br>
+        
+        <!-- Image for 404 error -->
+        <img src="{% static 'images/404.jpeg' %}" alt="404 Error Image">
+        
+        <!-- Home page button-->
+        <a href="http://127.0.0.1:8000/" class="not_found-btn">Return to Home</a>
+    </div>
+{% endblock %}
