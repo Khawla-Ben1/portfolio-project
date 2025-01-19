@@ -13,6 +13,7 @@ The website leverages Django as the backend framework, with HTML and CSS providi
 - **Frontend**: HTML, CSS, and JavaScript for creating the user interface.
   - JavaScript is specifically used for handling dynamic elements such as charts and interactive quiz options.
 - **Backend**: Django for managing logic, data processing, and serving web pages.
+- **Database**: SQLite (`db.sqlite3`) for storing quiz data, user accounts, and results.
 - **Templates**: Django templates (`templates/`) for rendering dynamic HTML pages.
 - **Static Files**: CSS, JavaScript, and images stored in the `static/` directory to style and enhance the website.
 - **Dataset**: Quiz data loaded from a dataset sourced from Kaggle.
@@ -134,6 +135,12 @@ The website leverages Django as the backend framework, with HTML and CSS providi
 
   ```bash
   pip install -r requirements.txt
+  ```
+- **Database Issues:**:
+  If you encounter any issues with the database, try resetting the migrations by deleting the `db.sqlite3` file and running:
+
+  ```bash
+  python manage.py migrate
   ```
 
 ---
