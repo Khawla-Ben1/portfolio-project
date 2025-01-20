@@ -55,7 +55,6 @@ def dashboard_view(request):
 def take_quiz(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = quiz.questions.all()
-    # print(questions)
 
     if request.method == "POST":
         correct_answers = 0
