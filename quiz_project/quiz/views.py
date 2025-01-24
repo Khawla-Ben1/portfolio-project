@@ -9,8 +9,10 @@ from .forms import *
 
 def register_view(request):
     if request.user.is_authenticated:
+        # Redirect to dashboard if user is already logged in
         return redirect('dashboard')
     if request.method == "POST":
+        # Create a new user
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
@@ -22,9 +24,11 @@ def register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
+        # Redirect to dashboard if user is already logged in
         return redirect('dashboard')
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
+        # Authenticate the user
         if form.is_valid():
             email = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
@@ -41,6 +45,7 @@ def login_view(request):
 
 
 def logout_view(request):
+    #  Log out the user
     logout(request)
     messages.info(request, "Logged out successfully!")
     return redirect("login")
@@ -48,6 +53,7 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
+    # Fetch all quiz results for the logged-in user
     quiz_history = QuizResult.objects.filter(user=request.user).order_by("-date_taken")
     return render(request, "quiz/dashboard.html", {"quiz_history": quiz_history})
 
@@ -55,7 +61,6 @@ def dashboard_view(request):
 def take_quiz(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = quiz.questions.all()
-
     if request.method == "POST":
         correct_answers = 0
         for question in questions:
@@ -64,7 +69,7 @@ def take_quiz(request, quiz_id):
             if correct_option and selected_option_id:
                 if selected_option_id == str(correct_option.id):
                     correct_answers += 1
-
+        # Save the result
         QuizResult.objects.create(user=request.user, quiz=quiz, score=correct_answers)
         return HttpResponseRedirect(f"/quiz/results/{quiz.id}/?correct_answers={correct_answers}")
 
@@ -76,20 +81,15 @@ def results_view(request, quiz_id):
     correct_answers = int(request.GET.get("correct_answers", 0))
     total_questions = quiz.questions.count()
     incorrect_answers = total_questions - correct_answers
-
-    # Calculate the score percentage
+    #check the score
     score_percentage = (correct_answers / total_questions) * 100 if total_questions > 0 else 0
-
-    # Determine pass or fail
-    passed = score_percentage >= 60  # Passing threshold is 60%
-
-    # Pass data for the chart and pass/fail message
+    passed = score_percentage >= 50
     chart_data = {
         'correct': correct_answers,
         'incorrect': incorrect_answers,
         'total': total_questions
     }
-
+    #check the data so the chart will be displayed correctly
     return render(request, "quiz/results.html", {
         "quiz": quiz,
         "correct_answers": correct_answers,
@@ -101,18 +101,21 @@ def results_view(request, quiz_id):
 
 
 def Quizzes(request):
-    quizzes = Quiz.objects.all()  # Fetch all quizzes from the database
+    # Fetch all quizzes from the database
+    quizzes = Quiz.objects.all() 
     return render(request, 'quiz/quiz_list.html', {'quizzes': quizzes})
 
 
 def home_view(request):
     if request.user.is_authenticated:
-        return render(request, "quiz/dashboard.html")  # Render dashboard for authenticated users
+        # Render dashboard for authenticated users
+        return render(request, "quiz/dashboard.html") 
     else:
         return redirect('quiz/login')
 
 
 def handle_extra_path(request, extra):
+    #handle 404
     return render(request, 'quiz/404.html', status=404)
 
 
